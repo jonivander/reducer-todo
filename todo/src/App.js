@@ -1,12 +1,13 @@
 import React, { useReducer, useState } from 'react';
 import Todo from './Todo';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Form, Input } from 'reactstrap'; 
+import { Form, Input, Button } from 'reactstrap'; 
 import './App.css';
 
-const ACTIONS = {
+export const ACTIONS = {
   ADD_TODO: 'add-todo',
-  TOGGLE_TODO: 'toggle-todo'
+  TOGGLE_TODO: 'toggle-todo',
+  DELETE_TODO: 'delete-todo'
 }
 
 function reducer(todos, action) {
@@ -20,6 +21,10 @@ function reducer(todos, action) {
         }
         return todo 
       })
+    case ACTIONS.DELETE_TODO: 
+      return todos.filter(todo => todo.id != action.payload.id)
+    default:
+      return todos
   }
 }
 
@@ -43,8 +48,9 @@ function App() {
       <Input type ='text' value ={name} onChange={e => setName(e.target.value)} />
     </Form>
     {todos.map(todo => {
-      return <Todo key={todo.id} todo={todo} />
+      return <Todo key={todo.id} todo={todo} dispatch={dispatch} />
     })}
+    <Button onClick={() => dispatch({ type: ACTIONS.DELETE_TODO, payload: { id: todo.id }})}>Clear Completed</Button>
     </>
   );
 }

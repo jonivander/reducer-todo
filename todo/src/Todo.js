@@ -1,15 +1,22 @@
 import React from 'react';
+import { ACTIONS } from './App';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Button } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
 
-export default function Todo( {todo} ) {
+export default function Todo( {todo, dispatch} ) {
     return (
+        <>
         <div>
             <span style={{ color: todo.complete ? '#AAA' : '#000'}}>
                 {todo.name}
             </span>
-            <Button>Complete</Button>
-            <Button>Clear Completed</Button>
+            <Input 
+                type='checkbox' 
+                onClick={() => dispatch({ type: ACTIONS.TOGGLE_TODO, payload: { id: todo.id }})}
+                >Done!
+            </Input>
+            
         </div>
+        </> 
     )
 }
