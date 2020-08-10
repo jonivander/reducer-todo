@@ -15,7 +15,7 @@ export default function Todo( {todo, dispatch} ) {
                 onClick={() => dispatch({ type: ACTIONS.TOGGLE_TODO, payload: { id: todo.id }})}
                 >Done!
             </Input>
-            
+            <Button color="info" onClick={() => dispatch({ type: ACTIONS.DELETE_TODO, payload: { id: todo.id }})}>Delete</Button>
         </div>
         </> 
     )

@@ -7,7 +7,8 @@ import './App.css';
 export const ACTIONS = {
   ADD_TODO: 'add-todo',
   TOGGLE_TODO: 'toggle-todo',
-  DELETE_TODO: 'delete-todo'
+  DELETE_TODO: 'delete-todo',
+  CLEAR_TODO: 'clear-todo'
 }
 
 function reducer(todos, action) {
@@ -25,6 +26,8 @@ function reducer(todos, action) {
       return todos.filter(todo => todo.id != action.payload.id)
     default:
       return todos
+    case ACTIONS.CLEAR_TODO:
+      return todos.filter(todo => !todo.complete)
   }
 }
 
@@ -45,12 +48,14 @@ function App() {
   return (
     <>
     <Form onSubmit={handleSubmit}>
+      <h1>Whatchu gotta do?!</h1> 
       <Input type ='text' value ={name} onChange={e => setName(e.target.value)} />
-    </Form>
+    
     {todos.map(todo => {
       return <Todo key={todo.id} todo={todo} dispatch={dispatch} />
     })}
-    <Button onClick={() => dispatch({ type: ACTIONS.DELETE_TODO, payload: { id: todo.id }})}>Clear Completed</Button>
+    <Button onClick={() => dispatch({ type: ACTIONS.CLEAR_TODO })}>Clear Completed</Button>
+    </Form>
     </>
   );
 }
